@@ -5,7 +5,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Users</title>
-        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </head>
@@ -49,30 +48,56 @@
                     </c:forEach>
                 </tbody>
             </table>
-        </div>
         
-        <div class="insert">           
-            <form action="user" method="post">
-                <h2>Insert User</h2>
-                <input type="hidden" name="action" value="add">
-                <label for="addEmail">Email:</label> 
-                <input type="text" name="addEmail" id="addEmail" value=""><br>
-                <label for="addFName">First Name:</label> 
-                <input type="text" name="addFName" id="addFName" value=""><br>
-                <label for="addLName">Last Name:</label> 
-                <input type="text" name="addLName" id="addLName" value=""><br>
-                <label for="addPassword">Password:</label> 
-                <input type="text" name="addPassword" id="addPassword" value=""><br>
-                <label for="addRole">Role:</label> 
-                <select name="addRole" id="addRole">
-                    <option value="Regular User">Regular User</option>
-                    <option value="Company Admin">Company Admin</option>
-                    <option value="System Admin">System Admin</option>
-                </select>
-                
-                <button type="submit" >Create User</button>
-            </form>
+        
+            <div class="form">
+                <div class="insert" style="float:left;" >           
+                    <form action="user" method="post">
+                        <h2>Insert User</h2>
+                        <input type="hidden" name="action" value="add">
+                        <label for="addEmail">Email:</label> 
+                        <input type="text" name="addEmail" id="addEmail" value=""><br>
+                        <label for="addFName">First Name:</label> 
+                        <input type="text" name="addFName" id="addFName" value=""><br>
+                        <label for="addLName">Last Name:</label> 
+                        <input type="text" name="addLName" id="addLName" value=""><br>
+                        <label for="addPassword">Password:</label> 
+                        <input type="text" name="addPassword" id="addPassword" value=""><br>
+                        <label for="addRole">Role:</label> 
+                        <select name="addRole" id="addRole">
+                            <option value="Regular User">Regular User</option>
+                            <option value="Company Admin">Company Admin</option>
+                            <option value="System Admin">System Admin</option>
+                        </select>
+
+                        <button type="submit" >Create User</button>
+                    </form>
+                </div>
+
+                <div class="edit" style="float:right; margin: auto ">           
+                    <form action="user" method="post">
+                        <h2>Edit User</h2>
+                        <input type="hidden" name="action" value="edit">
+                        <label for="editEmail">Email:</label> 
+                        <input type="text" name="editEmail" id="editEmail" value=""><br>
+                        <label for="addFName">First Name:</label> 
+                        <input type="text" name="editFName" id="editFName" value=""><br>
+                        <label for="addLName">Last Name:</label> 
+                        <input type="text" name="editLName" id="editLName" value=""><br>
+                        <label for="addPassword">Password:</label> 
+                        <input type="text" name="editPassword" id="editPassword" value=""><br>
+                        <label for="editRole">Role:</label> 
+                        <select name="editRole" id="editRole">
+                            <option value="Regular User">Regular User</option>
+                            <option value="Company Admin">Company Admin</option>
+                            <option value="System Admin">System Admin</option>
+                        </select>
+
+                        <button type="submit" >Edit User</button>
+                    </form>
+                </div>
+            </div>
+                <p>${error}</p>
         </div>
-        <p>${error}</p>
     </body>
 </html>
