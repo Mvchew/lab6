@@ -1,6 +1,8 @@
 package ca.sait.lab6.servlets;
 
+import ca.sait.lab6.models.Role;
 import ca.sait.lab6.models.User;
+import ca.sait.lab6.services.RoleService;
 import ca.sait.lab6.services.UserService;
 import java.io.IOException;
 import java.util.List;
@@ -28,16 +30,34 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserService service = new UserService();
-
+        UserService userService = new UserService();
+        RoleService roleService = new RoleService();
+        String action = request.getParameter("action");
+        String email = request.getParameter("email");
 
         try{
-
-            List<User> users = service.getAll();
+            List<User> users = userService.getAll();
             request.setAttribute("users", users);
+        } catch(Exception e){
+
+        Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        catch(Exception e){Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, e);}
+        try{
+            List<Role> roles = roleService.getAll();
+            request.setAttribute("roles", roles);
+        } catch(Exception e){
+
+        Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        if(action != null && action.equals("delete")){
+            try{
+                userService.delete(email);
+            }catch(Exception ex){
+                request.setAttribute("error", ex.getMessage());
+            }
+        }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
@@ -53,6 +73,41 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        UserService userService = new UserService();
+        RoleService roleService = new RoleService();
+        String action = request.getParameter("action");
+
+        try{
+            List<User> users = userService.getAll();
+            request.setAttribute("users", users);
+        } catch(Exception e){
+
+        Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, e);
+        }
+         try{
+            List<Role> roles = roleService.getAll();
+            request.setAttribute("roles", roles);
+        } catch(Exception e){
+
+        Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, e);
+        }
+        if(action != null && action.equals("add")){
+            try{
+                String email = request.getParameter("addEmail");
+                String fName = request.getParameter("addFName");
+                String lName = request.getParameter("addLName");
+                String password = request.getParameter("addPassword");
+                String roleName = request.getParameter("addRole");
+             
+                int roleID= roleService.getRoleID(roleName);
+
+                userService.insert(email, true, fName, lName, password, new Role(roleID,roleName));      
+                
+            }catch(Exception ex){
+                
+                request.setAttribute("error", ex.getMessage());
+            }
+        }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
