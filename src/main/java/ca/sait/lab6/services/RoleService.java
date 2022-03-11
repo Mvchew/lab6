@@ -15,4 +15,10 @@ public class RoleService {
         List<Role> roles = this.roleDB.getAll();
         return roles;
     }
+
+    public int getRoleID(String roleName) throws Exception{
+
+        int id = this.roleDB.lookupRoleID(roleName);
+        return id;
+    }
 }
