@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * 
  * @author Melvin Chew
  */
 public class UserServlet extends HttpServlet {
@@ -77,6 +77,7 @@ public class UserServlet extends HttpServlet {
         RoleService roleService = new RoleService();
         String action = request.getParameter("action");
 
+        
         try{
             List<User> users = userService.getAll();
             request.setAttribute("users", users);
@@ -108,6 +109,24 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("error", ex.getMessage());
             }
         }
+
+        if(action != null && action.equals("edit")){
+                    try{
+                        String email = request.getParameter("editEmail");
+                        String fName = request.getParameter("editFName");
+                        String lName = request.getParameter("editLName");
+                        String password = request.getParameter("editPassword");
+                        String roleName = request.getParameter("editRole");
+
+                        int roleID= roleService.getRoleID(roleName);
+
+                        userService.update(email, true, fName, lName, password, new Role(roleID,roleName));      
+
+                    }catch(Exception ex){
+
+                        request.setAttribute("error", ex.getMessage());
+                    }
+                }
 
         this.getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
